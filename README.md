@@ -27,4 +27,12 @@ Verify that the nodes is ready for scheduling pods
 
 After I prepared the deployement file and the service with type NodePort which will expose jenkins , then apply the config yaml files in the dedicated namespace jenkins.
 
+Once the pod is ruuning , I forwarded the service already created using:
+
+minikube service jenkins -n jenkins , and the server is ready and responding :
+
+![alt text](image.png)
+
+
+# Creating  a Blue / Green Nodjs Deplyoment :
 
