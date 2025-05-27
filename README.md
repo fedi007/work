@@ -25,6 +25,6 @@ Verify that the nodes is ready and ready for scheduling pods
 
 #Deploying Jenkins :
 
-After I prepared the deployement file and the service with type NodePort which will expose jenkins 
+After I prepared the deployement file and the service with type NodePort which will expose jenkins , then apply the config yaml files in the dedicated namespace jenkins.
 
-Apply the YAML files 
+
