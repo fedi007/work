@@ -18,7 +18,7 @@ minikube cluster is added to the kubeconfig file:
 ![image](https://github.com/user-attachments/assets/f680020e-9e6a-404c-88d4-999a6994136f)
 
 
-Verify that the nodes is ready and ready for scheduling pods
+Verify that the nodes is ready for scheduling pods
 
 ![image](https://github.com/user-attachments/assets/68fdd56d-52ec-4e34-9f44-731acd1bad72)
 
