@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.efs.efsPVName }}
+spec:
+  capacity:
+    storage: {{ .Values.efs.efsCapacity }}
+  volumeMode: {{ .Values.efs.efsVolumeMode }}
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: {{ .Values.efs.efsReclaimPolicy }}
+  storageClassName: {{ .Values.efs.efsStorageClassName }}
+  csi:
+    driver: {{ .Values.efs.efsCSIDriver }}
+    volumeHandle: #here the efs id to mount the volume on it 

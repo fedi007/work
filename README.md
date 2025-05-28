@@ -64,3 +64,26 @@ Once the cluster is created :
 
 ![alt text](image-3.png)
 
+After that , I am going now to launch jenkins ( with JDK 21) on the eks cluster using a helm chart , in which I will do updated based on my config (AWS/EKS)
+
+I will use and efs voulme for creating the persistent volume and a claim for mounting Jenkins volume.
+
+After creating a dedicated namespace I will do :
+
+helm install jenkins jenkins_chart/ -n adad-jenkins 
+
+once the jekins is ready :
+
+![alt text](image-5.png)
+
+I will port forward to the service to access it : 
+
+![alt text](image-6.png)
+
+Now We can access : 
+
+![alt text](image-7.png)
+
+I installed the Kubernetes plugin so I can connect the jenkins pod to the EKS in which its running :
+
+![alt text](image-8.png) 

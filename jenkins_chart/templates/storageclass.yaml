@@ -1,0 +1,9 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: {{ .Values.efs.efsStorageClassName }}
+provisioner: {{ .Values.efs.efsProvisioner }} 
+parameters:
+  provisioningMode: efs-ap # enable dynamic provisioning
+  fileSystemId: #here the efs id to mount the volume on it 
+  directoryPerms: "700"
