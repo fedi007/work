@@ -36,3 +36,28 @@ minikube service jenkins -n jenkins , and the server is ready and responding :
 
 # Creating  a Blue / Green Nodjs Deplyoment :
 
+The node sample app is created in the namespace nodeapp in which both green and blue deployments are applied
+
+The serivce which expose the deployement on port 30080 is pointed on the blue deployment
+
+and it can be reached from http://192.168.49.2:30080/ and to switch to the green deployment which is already applied , the service pointed on the blue should be patched to the green deploy using :
+
+kubectl patch service node-app \
+  -p '{"spec": {"selector": {"app": "node-app", "version": "green"}}}'
+
+
+
+# Second Method , creating kubernetes cluster from EKS and using terraform :
+
+The configs files are present in the eks-tf folder , after initialzing terraform and creating the dedicated workspace assesment :
+
+![alt text](image-1.png)
+
+Then you can see that the cluster is creating from the AWS console : 
+
+![alt text](image-2.png)
+
+Once the cluster is created :
+
+![alt text](image-3.png)
+
