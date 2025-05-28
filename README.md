@@ -49,6 +49,12 @@ kubectl patch service node-app \
   -p '{"spec": {"selector": {"app": "node-app", "version": "green"}}}'
 
 
+The setup is automated using a bash automation script , to run it do :
+
+chmod 777 automation.sh 
+
+./automation.sh
+
 
 # Second Method , creating kubernetes cluster from EKS and using terraform :
 
