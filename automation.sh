@@ -42,7 +42,7 @@ spec:
     spec:
       containers:
       - name: jenkins
-        image: jenkins/jenkins:lts
+        image: jenkins/jenkins:lts-jdk17
         ports:
         - containerPort: 8080
 EOF
