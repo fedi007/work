@@ -22,6 +22,9 @@ Verify that the nodes is ready for scheduling pods
 
 ![image](https://github.com/user-attachments/assets/68fdd56d-52ec-4e34-9f44-731acd1bad72)
 
+Overview about the Cluster : 
+
+![alt text](image-4.png)
 
 #Deploying Jenkins :
 
@@ -49,7 +52,7 @@ kubectl patch service node-app \
 
 # Second Method , creating kubernetes cluster from EKS and using terraform :
 
-The configs files are present in the eks-tf folder , after initialzing terraform and creating the dedicated workspace assesment :
+The configs files are present in the eks-tf folder , after initialzing terraform and creating the dedicated aws account and using the workspace assesment :
 
 ![alt text](image-1.png)
 
