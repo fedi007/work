@@ -1,6 +1,6 @@
-**🛠️ Deploying Jenkins on a Minikube Kubernetes Cluster**
+# **🛠️ Deploying Jenkins on a Minikube Kubernetes Cluster**
 
-Prerequisites
+### Prerequisites
 
 Ensure you have the following tools installed:
 
@@ -10,18 +10,17 @@ Ensure you have the following tools installed:
 
 -Docker (for the Minikube driver)
 
-1️⃣ Installing Minikube
+### 1️⃣ Installing Minikube
 
 Run the following commands to install Minikube on a Linux system:
 
-<pre lang="md"> ```bash 
-curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 ``` </pre>
-<pre lang="md"> ```bash minikube sudo install minikube-linux-amd64 /usr/local/bin/minikube ``` </pre>
+<pre lang="md"> ```curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 ``` </pre>
+<pre lang="md"> ```minikube sudo install minikube-linux-amd64 /usr/local/bin/minikube ``` </pre>
 
 
-2️⃣ Starting Minikube
+### 2️⃣ Starting Minikube
 
-<pre lang="md"> ```bash minikube start --driver=docker ``` </pre>
+<pre lang="md"> ```minikube start --driver=docker ``` </pre>
 
 ![image](https://github.com/user-attachments/assets/ca84bce4-4920-4390-b077-d48602f7e304)
 
@@ -38,7 +37,7 @@ Overview about the Cluster :
 
 ![alt text](image-4.png)
 
-3️⃣ Deploying Jenkins on Minikube
+### 3️⃣ Deploying Jenkins on Minikube
 
 Prepared the need Kubernetes manifests:
 
@@ -48,12 +47,12 @@ Prepared the need Kubernetes manifests:
 
 Once the pod is ruuning , I forwarded the service already created using:
 
-<pre lang="md"> ```bash minikube service jenkins -n jenkins ``` </pre> ,and the server is ready and responding :
+<pre lang="md"> ```minikube service jenkins -n jenkins ``` </pre> ,and the server is ready and responding :
 
 ![alt text](image.png)
 
 
-4️⃣ Blue/Green Node.js Deployment
+### 4️⃣ Blue/Green Node.js Deployment
 
 A sample Node.js application is deployed in the nodeapp namespace with both blue and green deployments.
 
@@ -67,25 +66,25 @@ To switch the service to point to the green deployment:
 <pre lang="md"> ```kubectl patch service node-app \
   -p '{"spec": {"selector": {"app": "node-app", "version": "green"}}}' ``` </pre>
 
-⚙️ Automating the Deployment
+### ⚙️ Automating the Deployment
 
 The setup is automated using a bash automation script , to run it do :
  
-<pre lang="md"> ```bash chmod 777 automation.sh ``` </pre>
-<pre lang="md"> ```bash ./automation.sh ``` </pre>
+<pre lang="md"> ```chmod 777 automation.sh ``` </pre>
+<pre lang="md"> ```./automation.sh ``` </pre>
 
 
-**☁️ Deploying Jenkins on AWS EKS using Terraform**
+# **☁️ Deploying Jenkins on AWS EKS using Terraform**
 
-1️⃣ Setting Up EKS
+### 1️⃣ Setting Up EKS
 
 - Navigate to the eks-tf/ directory.
 
 - Initialize Terraform and apply the configurations using:
 
-<pre lang="md"> ```bash terraform init ``` </pre>
-<pre lang="md"> ```bash terraform workspace new assessment``` </pre>
-<pre lang="md"> ```bash terraform apply ``` </pre>
+<pre lang="md"> ```terraform init ``` </pre>
+<pre lang="md"> ```terraform workspace new assessment``` </pre>
+<pre lang="md"> ```terraform apply ``` </pre>
 
 ![alt text](image-1.png)
 
@@ -97,7 +96,7 @@ Once the cluster is created :
 
 ![alt text](image-3.png)
 
-2️⃣ Installing Jenkins on EKS with Helm
+### 2️⃣ Installing Jenkins on EKS with Helm
 
 
 After that , I am going now to launch jenkins ( with JDK 21) on the eks cluster using a helm chart based on my configuration (AWS/EKS)
@@ -109,11 +108,11 @@ I will use and efs voulme for creating the persistent volume and a claim for mou
 1.Create a namespace: 
 
 
-<pre lang="md"> ```bash kubectl create namespace adad-jenkins ``` </pre>
+<pre lang="md"> ```kubectl create namespace adad-jenkins ``` </pre>
 
 2.Install Jenkins using Helm (with JDK 21 and custom config):
 
-<pre lang="md"> ```bash helm install jenkins jenkins_chart/ -n adad-jenkins  ``` </pre>
+<pre lang="md"> ```helm install jenkins jenkins_chart/ -n adad-jenkins  ``` </pre>
 
 once the jenkins is ready :
 
@@ -127,7 +126,7 @@ Now We can access jenkins UI:
 
 ![alt text](image-7.png)
 
-3️⃣ Integrating Jenkins with Kubernetes
+### 3️⃣ Integrating Jenkins with Kubernetes
 
 
 Install the Kubernetes plugin in Jenkins and configure it to connect to the same EKS cluster it is running in.
