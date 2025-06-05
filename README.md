@@ -166,7 +166,7 @@ The pipeline performs a basic health check on the green deployment (e.g., via HT
 
 ## Switch Traffic to Green
 If the smoke test passes, the service selector is updated to point to the green deployment, effectively switching  traffic from blue to green.
-
+![alt text](image-18.png)
 ![alt text](image-15.png) 
 
 ## Decommission Blue
