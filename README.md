@@ -134,3 +134,49 @@ Install the Kubernetes plugin in Jenkins and configure it to connect to the same
 This allows Jenkins to manage dynamic agents (pods) inside the EKS cluster.
 
 ![alt text](image-8.png) 
+
+
+### 4️⃣  Demostrating a blue green deployment with Jenkins
+
+Initially, the application is live with the blue deployment as you can see in the screenshoot
+
+![alt text](image-9.png)
+
+and the service routes traffic to the blue pods.
+
+![alt text](image-10.png)
+
+then after define the Jenkins pipline under (nodjsapp/Jenkinsfile) with steps :
+
+
+ ## Deploy Green Version : 
+ A new version of the application (green) is deployed in parallel alongside the blue version. It does not receive traffic yet.
+
+ ![alt text](image-12.png)
+
+ ## Wait for Readiness
+The pipeline waits until the green pods are up and running successfully.
+
+![alt text](image-13.png)
+
+ ## Smoke Testing
+The pipeline performs a basic health check on the green deployment (e.g., via HTTP call or port-forwarding) to verify it's functioning correctly.
+
+![alt text](image-14.png)
+
+## Switch Traffic to Green
+If the smoke test passes, the service selector is updated to point to the green deployment, effectively switching  traffic from blue to green.
+
+![alt text](image-15.png) 
+
+## Decommission Blue
+The blue deployment is scaled down or stopped to free up resources.
+
+![alt text](image-16.png)
+
+![alt text](image-11.png)
+
+## Pipeline Results
+
+
+![alt text](image-17.png)

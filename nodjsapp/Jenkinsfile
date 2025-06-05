@@ -1,0 +1,92 @@
+pipeline {
+    agent {
+        kubernetes {
+            yaml '''
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: kubectl
+    image: lachlanevenson/k8s-kubectl:v1.25.4
+    command:
+    - cat
+    tty: true
+  serviceAccountName: adad-jenkins-chart-v2    
+'''
+        }
+    }
+
+
+    environment {
+        KUBE_NAMESPACE = "adad-jenkins"
+        APP_NAME = "node-app"
+        GREEN_DEPLOYMENT = "node-app-green"
+        SERVICE_NAME = "node-app"
+    }
+
+    stages {
+        stage('Deploy Green') {
+            steps {
+                container('kubectl') {
+                    sh 'kubectl apply -f nodjsapp/green_dep.yaml -n $KUBE_NAMESPACE'
+                }
+            }
+        }
+
+        stage('Wait for Green') {
+            steps {
+                container('kubectl') {
+                    sh 'kubectl rollout status deployment/$GREEN_DEPLOYMENT -n $KUBE_NAMESPACE --timeout=60s'
+                }
+            }
+        }
+
+        stage('Smoke Test Green') {
+            steps {
+                container('kubectl') {
+                    script {
+                        def greenPod = sh(
+                            script: "kubectl get pods -n $KUBE_NAMESPACE -l app=$APP_NAME,version=green -o jsonpath='{.items[0].metadata.name}'",
+                            returnStdout: true
+                        ).trim()
+                        sh """
+                        kubectl port-forward -n $KUBE_NAMESPACE pod/${greenPod} 8080:3000 &
+                        PORT_FORWARD_PID=\$!
+                        sleep 5
+                        curl -s http://localhost:8080 | grep 'Assement app'
+                       kill \$PORT_FORWARD_PID
+                       """
+                    }
+                }
+            }
+        }
+
+        stage('Switch Service to Green') {
+            steps {
+                container('kubectl') {
+                    sh '''
+                    kubectl patch service $SERVICE_NAME -n $KUBE_NAMESPACE \
+                      -p '{"spec": {"selector": {"app": "node-app", "version": "green"}}}'
+                    '''
+                }
+            }
+        }
+
+        stage('Scale Down Blue') {
+            steps {
+                container('kubectl') {
+                    sh 'kubectl scale deployment/$APP_NAME --replicas=0 -n $KUBE_NAMESPACE'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Blue-Green switch complete."
+        }
+        failure {
+            echo "❌ Something went wrong. Green may not be live."
+        }
+    }
+}
